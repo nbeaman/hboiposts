@@ -1,0 +1,33 @@
+<div class="container">
+       <div class="float-left">
+          <div class="row">
+             <h2><%= @post.title %></h2>
+             <div class="font-weight-light">
+                 <i>&nbsp;&nbsp;<span class="align-text-bottom"><%= @post.created_at.strftime("%A, %d %b %Y %l:%M %p") %></span></i>
+            </div> 
+          </div>
+       </div>
+       <div class="float-right">
+       		<%= link_to 'Edit', edit_post_path(@post), {:class => 'btn btn-primary'} %>
+       		<%= link_to 'Delete', post_path(@post),
+					method: :delete,
+					data: {confirm: 'Are you sure?'},
+					:class => 'btn btn-danger' %>
+       </div>
+<br><br>
+       <div class="float-none">
+           <p><%= @post.content %></p>
+       </div>
+</div>
+
+	<% (0...@post.images.count).each do |i| %>
+
+			<%= link_to image_tag(@post.thumbnail(i)), post_image_path(params[:id],@post.images[i][:id]) %>
+	<% end %>
+
+<hr>
+
+<%= render 'comments/comments' %>
+<%= render 'comments/form' %>
+
+

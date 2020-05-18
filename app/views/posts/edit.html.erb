@@ -1,0 +1,31 @@
+<style>
+.column {
+  float: center;
+  align-items: center;
+  width: 220px;
+  padding: 5px;
+}
+</style>
+
+<h1>Edit Post</h1>
+
+<div>
+	<p>
+		<%= render 'posts/form' %>
+
+		<% if @post.images.attached? %>
+		<div class="row">
+			<% (0...@post.images.count).each do |i| %>
+				<div  class="column">
+					<%= image_tag(@post.thumbnail(i)) %>
+				<br>
+					<%= link_to "Remove", post_image_path(@post.id,@post.images[i].id),
+						method: :delete,
+						data: {confirm: 'Are you sure?'} %>
+				</div>				
+			<% end %>
+		</div>
+		<% end %>
+
+	</p>
+</div>

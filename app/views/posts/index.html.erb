@@ -1,0 +1,35 @@
+<h2>Posts</h2>
+
+<% @posts.each do |p| %>
+
+	<div class="container">
+
+		<div class="well">
+			<!-- link_to NAMEIT, NamedRoutHelper_urlFormat  -->
+			<!-- NamedRoutHelper_urlFormat: post_path(p.id) -  you could also just use p or p[:id] or just post (Ruby knows!)-->
+			<!-- Note: we can use post_path b/c we setup as: 'post' in routes to avoid confusion -->
+
+			<div class="d-flex justify-content-between">
+			      <div class="row">
+			         <h3><%= link_to p.title, post_path(p.id) %></h3>
+			         <% if(p.images.count > 0) %>
+			         	 <div class="font-weight-light"> &nbsp;&nbsp;<i>photos(<%= p.images.count %>)</i></div>
+			         <% end %>
+			      </div>
+			      <div class="font-weight-light">
+			         <i><%= p.created_at.strftime("%A, %d %b %Y %l:%M %p") %></i>
+			      </div>
+			 </div>			
+
+
+			<% if(p.content.length < 300) %>
+				<p><%= p.content %></p>
+			<% else %>
+				<p><%= p.content.byteslice(1, 300) %> <i style="font-weight:lighter">...more</i></p>
+			<% end %>
+
+		</div>		
+
+	</div>
+
+<% end %>

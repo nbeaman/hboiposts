@@ -1,0 +1,29 @@
+<div class="container">
+	<%= form_for @post do |f| %>
+
+		<% if @post.errors.any? %>
+			<% @post.errors.full_messages.each do |msg| %>
+				<div class="alert alert-danger"><%= msg %></div>
+			<% end %>
+		<% end %>
+
+		<p>
+			<%= f.label :title %>
+			<%= f.text_field(:title, {:class => 'form-control'}) %>
+		</p>
+
+		<p>
+			<%= f.label :content %>
+			<%= f.text_area(:content, {:class => 'form-control'}) %>
+		</p>
+
+		<p>
+			<%= f.label 'Images' %>
+			<%= f.file_field :keep_images, multiple: true %>
+		</p>
+				<p>
+			<%= f.submit({:class => 'btn btn-primary'}) %>
+		</p>
+
+	<% end %>
+</div>
