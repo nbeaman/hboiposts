@@ -19,10 +19,13 @@
            <p><%= @post.content %></p>
        </div>
 </div>
-
+<% #byebug %>
 	<% (0...@post.images.count).each do |i| %>
-
-			<%= link_to image_tag(@post.thumbnail(i)), post_image_path(params[:id],@post.images[i][:id]) %>
+      <% if(@post.images[i].content_type == "image/png" || @post.images[i].content_type == "image/jpeg") %>
+			   <%= link_to image_tag(@post.thumbnail(i)), post_image_path(params[:id],@post.images[i][:id]) %>
+      <% else %>
+          <%= link_to image_tag("pdf-icon.png"), rails_blob_path(@post.images[i], disposition: 'attachment') %>
+      <% end %>
 	<% end %>
 
 <hr>

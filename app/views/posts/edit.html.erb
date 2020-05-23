@@ -17,11 +17,21 @@
 		<div class="row">
 			<% (0...@post.images.count).each do |i| %>
 				<div  class="column">
-					<%= image_tag(@post.thumbnail(i)) %>
-				<br>
-					<%= link_to "Remove", post_image_path(@post.id,@post.images[i].id),
-						method: :delete,
-						data: {confirm: 'Are you sure?'} %>
+					<% if(@post.images[i].content_type != 'application/pdf') %> 
+						<%= image_tag(@post.thumbnail(i)) %>
+						<br>
+							<%= link_to "Remove", post_image_path(@post.id,@post.images[i].id),
+								method: :delete,
+								data: {confirm: 'Are you sure?'} %>						
+					<% else %>
+						<%= link_to image_tag("pdf-icon.png"), rails_blob_path(@post.images[i], disposition: 'attachment') %>
+						<br>
+							<%= link_to "Remove", post_image_path(@post.id,@post.images[i].id),
+								method: :delete,
+								data: {confirm: 'Are you sure?'} %>						
+						
+					<% end %>
+
 				</div>				
 			<% end %>
 		</div>

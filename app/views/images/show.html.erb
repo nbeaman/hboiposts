@@ -3,7 +3,6 @@
 
 
 <% @post = Post.find(params[:post_id]) %>
-<!-- image_tag (@post.images[0]) -->
 
 <head>
 
@@ -27,24 +26,29 @@
 
   <ol class="carousel-indicators">
   	<% (0...@post.images.count).each do |i| %>
-        <% if(@post.images[i][:id] == Integer(params[:id])) %>
-            <li data-target="#carouselExampleIndicators" data-slide-to="<%= i %>" class="active"></li>
-        <% else %>
-            <li data-target="#carouselExampleIndicators" data-slide-to="<%= i %>"></li>
-        <% end %>  
+        <% if(@post.images[i].content_type != 'application/pdf') %> 
+            <% if(@post.images[i][:id] == Integer(params[:id])) %>
+                <li data-target="#carouselExampleIndicators" data-slide-to="<%= i %>" class="active"></li>
+            <% else %>
+                <li data-target="#carouselExampleIndicators" data-slide-to="<%= i %>"></li>
+            <% end %>  
+        <% end %>
 	  <% end %>
   </ol>
 
   <div class="carousel-inner">
 
   	<% (0...@post.images.count).each do |i| %>
-		<% if(@post.images[i][:id] == Integer(params[:id])) %>
-        <div class="item active">
-    <% else %>
-        <div class="item">
-    <% end %>
-      		<%= image_tag @post.images[i].variant(resize: '600x600'), class:"d-block" %>
-    	</div>		
+      <% if(@post.images[i].content_type != 'application/pdf') %> 
+        		<% if(@post.images[i][:id] == Integer(params[:id])) %>
+                <div class="item active">
+            <% else %>
+                <div class="item">
+            <% end %>
+
+        		    <%= image_tag @post.images[i].variant(resize: '600x600'), class:"d-block" %>
+      	      </div>		
+      <% end %>              
 	<% end %>
 
   </div>

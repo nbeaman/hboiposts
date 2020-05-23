@@ -1,5 +1,11 @@
 class ImagesController < ApplicationController
 
+	def show
+		# don't show the regular menu bar b/c these are photos on a black background
+		# a special views/layout/carousel.html.erg has been created for this
+		render :layout => 'carousel'
+	end
+
 	def destroy
 		@post = Post.find(params[:post_id])
 		@image = @post.images.find(params[:id])
